@@ -14,7 +14,8 @@ test.describe('mobile home hero', () => {
   test('fits in the first screen on 360x640', async ({ page }) => {
     await page.goto('/');
     await page.evaluate(() => window.scrollTo(0, 0));
-    const initialViewportHeight = await page.evaluate(() => window.visualViewport?.height ?? window.innerHeight);
+    const viewportHeight = page.viewportSize()?.height;
+    expect(viewportHeight).toBeTruthy();
 
     const hero = page.locator('main .hero');
     await expect(hero).toBeVisible();
@@ -40,9 +41,9 @@ test.describe('mobile home hero', () => {
       };
     });
     expect(heroBottom.heroViewportTop).toBeGreaterThanOrEqual(heroBottom.firstScreenTop);
-    expect(heroBottom.heroBottom).toBeLessThanOrEqual(initialViewportHeight + 1);
+    expect(heroBottom.heroBottom).toBeLessThanOrEqual(viewportHeight! + 1);
     expect(ctaBottom.ctaViewportTop).toBeGreaterThanOrEqual(0);
-    expect(ctaBottom.ctaBottom).toBeLessThanOrEqual(initialViewportHeight + 1);
+    expect(ctaBottom.ctaBottom).toBeLessThanOrEqual(viewportHeight! + 1);
   });
 });
 
