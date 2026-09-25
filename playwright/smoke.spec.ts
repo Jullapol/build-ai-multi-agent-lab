@@ -27,7 +27,7 @@ test.describe('mobile home hero', () => {
         heroViewportTop: rect.top,
         heroBottom: rect.bottom,
         firstScreenTop: 0,
-        firstScreenBottom: window.innerHeight,
+        firstScreenBottom: window.visualViewport?.height ?? window.innerHeight,
       };
     });
     expect(heroBottom.heroViewportTop).toBeGreaterThanOrEqual(heroBottom.firstScreenTop);
