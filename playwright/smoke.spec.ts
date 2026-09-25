@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+const mobileViewport = { width: 360, height: 640 };
+
 test('home renders nav and heading', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('navigation')).toBeVisible();
@@ -7,7 +9,7 @@ test('home renders nav and heading', async ({ page }) => {
 });
 
 test.describe('mobile home hero', () => {
-  test.use({ viewport: { width: 360, height: 640 } });
+  test.use({ viewport: mobileViewport });
 
   test('fits in the first screen on 360x640', async ({ page }) => {
     await page.goto('/');
@@ -27,11 +29,10 @@ test.describe('mobile home hero', () => {
         heroViewportTop: rect.top,
         heroBottom: rect.bottom,
         firstScreenTop: 0,
-        firstScreenBottom: window.visualViewport?.height ?? window.innerHeight,
       };
     });
     expect(heroBottom.heroViewportTop).toBeGreaterThanOrEqual(heroBottom.firstScreenTop);
-    expect(heroBottom.heroBottom).toBeLessThanOrEqual(heroBottom.firstScreenBottom + 1);
+    expect(heroBottom.heroBottom).toBeLessThanOrEqual(mobileViewport.height + 1);
   });
 });
 
