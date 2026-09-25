@@ -1,14 +1,33 @@
 import type { APIRoute } from 'astro';
 import { insertContact } from '../../lib/db';
+import { checkRateLimit, clientIp, RATE_LIMITS } from '../../lib/rate-limit';
 
 export const prerender = false;
 
 /**
  * POST /api/contact
- * Lab 05: validate JSON {name,email,message}, persist with insertContact, return 201.
+ * Validate JSON {name,email,message}, persist with insertContact, return 201.
+ * Rate limited per client IP (D-03).
  */
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const rl = checkRateLimit(
+      `contact:${clientIp(request.headers)}`,
+      RATE_LIMITS.contact.limit,
+      RATE_LIMITS.contact.windowMs
+    );
+    if (!rl.ok) {
+      return new Response(
+        JSON.stringify({ error: 'RATE_LIMIT: too many requests, try again later' }),
+        {
+          status: 429,
+          headers: {
+            'content-type': 'application/json',
+            'retry-after': String(rl.retryAfterSec),
+          },
+        }
+      );
+    }
     const body = await request.json();
     const row = insertContact(body);
     return new Response(JSON.stringify(row), {

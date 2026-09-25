@@ -3,7 +3,7 @@
 > คัดลอกเป็น `docs/STATUS.md` ใน Lab 00 · อ่านทุก session · **สั้น** · single-writer ต่อรอบ  
 > ดู [`COURSE.md`](../COURSE.md) ชั้น State (Hot)
 
-Last updated: 2026-09-25 15:40 +07:00  
+Last updated: 2026-09-25 15:47 +07:00  
 Updated by: OpenCode
 
 ## Current goal
@@ -15,6 +15,7 @@ Updated by: OpenCode
 - Lab 05: `insertContact` / `insertGuestbook` / `listGuestbook` ใน `src/lib/db.ts` — better-sqlite3, validate input, error ปลอดภัย ✅
 - **PR #13 MERGED → `main` (2026-09-25 15:38)** · test:labs ยืนยัน green บน main หลัง merge
 - **L5 ปิด**: XSS fix (commit `fc371ba` ผ่าน `claude -p`) — payload จริง render เป็นข้อความดิบ
+- **Hardening D-03**: rate limit per-IP (contact 3/10min · guestbook 5/10min, 429 + Retry-After) — ยืนยัน live บน localhost: req 1-5 → 400, req 6 → 429 · test ใหม่ `tests/rate-limit.test.ts` 4/4 (รวมชุดเต็ม 7/7)
 - **Lab 05b swarm** (~12/20 turns, จบก่อนเพดาน): ส่งฟอร์ม guestbook + contact บน localhost:4321 ผ่านจริง (Playwright) · สรุปใน [`SWARM.md`](./SWARM.md)
 
 ## In progress

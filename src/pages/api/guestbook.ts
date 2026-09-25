@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { insertGuestbook, listGuestbook } from '../../lib/db';
+import { checkRateLimit, clientIp, RATE_LIMITS } from '../../lib/rate-limit';
 
 export const prerender = false;
 
@@ -24,6 +25,23 @@ export const GET: APIRoute = async () => {
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const rl = checkRateLimit(
+      `guestbook:${clientIp(request.headers)}`,
+      RATE_LIMITS.guestbook.limit,
+      RATE_LIMITS.guestbook.windowMs
+    );
+    if (!rl.ok) {
+      return new Response(
+        JSON.stringify({ error: 'RATE_LIMIT: too many requests, try again later' }),
+        {
+          status: 429,
+          headers: {
+            'content-type': 'application/json',
+            'retry-after': String(rl.retryAfterSec),
+          },
+        }
+      );
+    }
     const body = await request.json();
     const row = insertGuestbook(body);
     return new Response(JSON.stringify(row), {
