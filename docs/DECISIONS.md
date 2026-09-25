@@ -76,3 +76,11 @@ Devil ดันให้ตัด scope จนเหลือน้อย แล
 | [#11](https://github.com/Jullapol/build-ai-multi-agent-lab/issues/11) | วิธีส่งงาน Lab 04: Commit A (security) merge ได้ · Commit B (IA) เป็น PR รอ JT | D12 |
 
 > #6 = draft PR ของ Copilot ที่แก้ #2 (ไม่ใช่ issue จาก decision)
+
+## Lab 03 — MCP vs gh
+
+- **ความเร็ว:** ฝั่ง MCP สร้างได้ 5 issue ใน turn เดียว (ยิงพร้อมกัน) และอ่าน label / issue ซ้ำ / `get_me` ได้ก่อนสร้าง แต่ต้องโหลด schema ของ tool ก่อนใช้ครั้งแรก · ฝั่ง `gh` ยิงได้ทีละคำสั่ง ถ้า body เป็นภาษาไทยหลายบรรทัดต้องใช้ here-string ของ PowerShell (quoting พลาดง่ายกว่า) แต่มนุษย์พิมพ์เองได้ทันที ไม่ต้องผ่าน agent
+- **สิทธิ์:** MCP ใช้ token ที่ตั้งค่าไว้ใน config ของ MCP server สิทธิ์เท่ากับ scope ของ token นั้น และ agent เรียกได้ทุก tool ที่ server เปิดให้ (รวม `delete_repository` / `merge_pull_request`) จึงต้องคุมด้วย permission ของ harness · `gh` ใช้ token จาก `gh auth login` (keyring) และคนเป็นผู้กด Enter เอง · ทั้งสองแบบห้ามใส่ token ลงในไฟล์ที่ commit
+- **Audit trail:** บน GitHub ทั้งสองแบบแสดงผู้สร้างเป็นบัญชีเดียวกัน (Jullapol) จึงแยกจาก issue ไม่ได้ว่า agent หรือคนเป็นผู้สร้าง · ฝั่ง MCP มี transcript ของ Claude และตารางใน `DECISIONS.md` ช่วยย้อนดู · ฝั่ง `gh` เหลือแค่ shell history → ควรตั้ง prefix ของ title (`[D-id]` / `[Lab 03]`) แล้วลิงก์กลับ `docs/` เสมอ
+- **ข้อผิดพลาดที่เจอ (ฝั่ง MCP):** ไม่เจอ 401 · label `docs` ไม่มีใน repo จึงใช้ `documentation` แทน · เลข issue ข้ามจาก #5 ไป #7 เพราะ Copilot เปิด draft PR #6 (issue กับ PR ใช้ชุดเลขเดียวกัน) · ลิงก์ `blob/main/docs/DECISIONS.md` ใน issue จะเปิดได้ 404 จนกว่าไฟล์จะเข้า `main` · ฝั่ง `gh` ให้บันทึกเพิ่มหลังรันจริง
+- **เมื่อไหร่ใช้อะไร:** ใช้ MCP เมื่อต้องสร้างหลาย issue จากเอกสารใน loop ของ agent (อ่าน → เช็กซ้ำ → สร้าง → สรุปตาราง) · ใช้ `gh` เมื่อคนสร้างเอง issue เดียว หรืออยากดู draft ก่อน publish (`--web`) หรือเมื่อ MCP ล่ม/ได้ 401 · MCP เป็นช่องทางทำงานกับ GitHub เท่านั้น ไม่ใช่ช่องส่งงานระหว่าง Claude ↔ OpenCode

@@ -8,6 +8,8 @@ import { fileURLToPath } from 'node:url';
 export type Profile = {
   name: string;
   headline: string;
+  /** Optional `## Tagline` in PROFILE.md — empty string when absent (not rendered). */
+  tagline: string;
   bio: string;
   audience: string;
   interests: string[];
@@ -21,6 +23,7 @@ export type Profile = {
 const FALLBACK: Profile = {
   name: 'Your Name',
   headline: 'Personal branding site',
+  tagline: '',
   bio: 'This personal site is still being built — content is coming soon.',
   audience: 'Hiring managers / peers / community',
   interests: ['AI agents', 'Web', 'Teaching'],
@@ -39,7 +42,7 @@ export function loadProfile(): Profile {
   if (!existsSync(path)) return FALLBACK;
   const raw = readFileSync(path, 'utf8').replace(/\r\n/g, '\n');
   const get = (label: string) => {
-    const m = raw.match(new RegExp(`^##\\s*${label}\\s*\\n([\\s\\S]*?)(?=^##\\s|$)`, 'm'));
+    const m = raw.match(new RegExp(`^##\\s*${label}\\s*\\n([\\s\\S]*?)(?=^##\\s|(?![\\s\\S]))`, 'm'));
     return (m?.[1] || '').trim();
   };
   const interests = get('Interests')
@@ -49,6 +52,7 @@ export function loadProfile(): Profile {
   return {
     name: get('Name') || FALLBACK.name,
     headline: get('Headline') || FALLBACK.headline,
+    tagline: get('Tagline') || FALLBACK.tagline,
     bio: get('Bio') || FALLBACK.bio,
     audience: get('Audience') || FALLBACK.audience,
     interests: interests.length ? interests : FALLBACK.interests,

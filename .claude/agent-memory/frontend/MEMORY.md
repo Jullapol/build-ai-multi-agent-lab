@@ -1,0 +1,1 @@
+- [UI traps from debate](project_ui_traps_from_debate.md) — smoke.spec คู่การลบฟอร์ม, guard ไม่จับ runtime, token สี, 302 ก่อน 301, ห้าม override Must, เช็ก 360px

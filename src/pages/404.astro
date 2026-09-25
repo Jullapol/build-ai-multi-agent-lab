@@ -1,0 +1,19 @@
+---
+export const prerender = false;
+import BaseLayout from '../layouts/BaseLayout.astro';
+// D9: branded 404. Fixed copy only — never echo the requested path or server errors.
+---
+<BaseLayout title="ไม่พบหน้านี้">
+  <section class="card not-found">
+    <h1>หน้านี้ผู้ช่วยผมเก็บไปแล้วครับ</h1>
+    <p>ลองกลับไปเริ่มจากหน้าที่ยังอยู่ครบดูนะครับ</p>
+    <p class="actions">
+      <a class="button-link" href="/">หน้าแรก</a>
+      <a class="button-link secondary" href="/about">เกี่ยวกับผม</a>
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; }
+</style>

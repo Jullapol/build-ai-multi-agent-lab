@@ -3,12 +3,43 @@ export const prerender = false;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { loadProfile } from '../lib/profile';
 const profile = loadProfile();
+// D5: keep paragraph breaks from PROFILE ## Bio.
+const bioParagraphs = profile.bio.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+// D5: split "หัว — คำอธิบาย" in the UI only; profile.interests stays string[].
+const interestCards = profile.interests.map((item) => {
+  const [title, ...rest] = item.split(/\s+[—–]\s+/);
+  return { title: title.trim(), description: rest.join(' — ').trim() };
+});
 ---
-<BaseLayout title={`About · ${profile.name}`}>
+<BaseLayout title={`เกี่ยวกับผม · ${profile.name}`}>
   <article class="card">
-    <h1>About</h1>
-    <p>{profile.bio}</p>
-    <p>เรื่องราวเพิ่มเติม — timeline, skills และลิงก์จะอัปเดตเร็ว ๆ นี้</p>
+    <h1>เกี่ยวกับผม</h1>
+    {bioParagraphs.map((p) => <p>{p}</p>)}
   </article>
+
+  <section id="interests" aria-labelledby="interests-heading">
+    <h2 id="interests-heading">เรื่องที่ผมให้ผู้ช่วย AI ช่วยอยู่</h2>
+    <ul class="grid interest-list">
+      {interestCards.map((card) => (
+        <li class="card interest-card">
+          <h3>{card.title}</h3>
+          {card.description && <p>{card.description}</p>}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="closing">
+    <p>อ่านจบแล้ว ลองหยิบสักข้อไปใช้กับงานตัวเองดูครับ เสร็จเร็วแล้วก็ไปนอนเล่นได้เลย</p>
+    <p><a href="/">← กลับหน้าแรก</a></p>
+  </section>
 </BaseLayout>
 
+<style>
+  .interest-list { list-style: none; padding: 0; margin: 0; }
+  .interest-card { margin: 0; border-top: 4px solid var(--accent-soft); }
+  .interest-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; }
+  .interest-card p { margin: 0; }
+  .closing { margin-top: 2rem; }
+  .closing p:first-child { color: var(--text); }
+</style>
