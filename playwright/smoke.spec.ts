@@ -14,8 +14,9 @@ test.describe('mobile home hero', () => {
   test('fits in the first screen on 360x640', async ({ page }) => {
     await page.goto('/');
     await page.evaluate(() => window.scrollTo(0, 0));
-    const viewportHeight = page.viewportSize()?.height;
-    expect(viewportHeight).toBeTruthy();
+    const viewport = page.viewportSize();
+    expect(viewport).not.toBeNull();
+    const viewportHeight = viewport!.height;
 
     const hero = page.locator('main .hero');
     await expect(hero).toBeVisible();
