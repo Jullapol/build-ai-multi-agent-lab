@@ -24,7 +24,7 @@ test('home hero fits in the first screen on 360x640', async ({ page }) => {
       scrollY: window.scrollY,
       heroTop: window.scrollY + rect.top,
       heroBottom: window.scrollY + rect.bottom,
-      firstScreenBottom: window.innerHeight,
+      firstScreenBottom: window.scrollY + window.innerHeight,
     };
   });
   expect(heroBottom.scrollY).toBe(0);
