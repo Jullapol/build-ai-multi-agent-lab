@@ -3,18 +3,18 @@
 > คัดลอกเป็น `docs/STATUS.md` ใน Lab 00 · อ่านทุก session · **สั้น** · single-writer ต่อรอบ  
 > ดู [`COURSE.md`](../COURSE.md) ชั้น State (Hot)
 
-Last updated: 2026-09-25 15:41 +07:00  
+Last updated: 2026-09-25 15:40 +07:00  
 Updated by: OpenCode
 
 ## Current goal
 
-- Lab 05b swarm — guestbook/API พร้อม demo บน localhost (✅ ครบ done criteria, ก่อนเพดาน 20 turns)
+- Lab 05 — **เสร็จสมบูรณ์**: guestbook/contact SQLite + XSS fix merged เข้า `main` (PR #13)
 
 ## Done
 
 - Lab 05: `insertContact` / `insertGuestbook` / `listGuestbook` ใน `src/lib/db.ts` — better-sqlite3, validate input, error ปลอดภัย ✅
-- `npm run test:labs` green (2/2) · `npm test` green (3/3) — ยืนยันซ้ำล่าสุด 15:19
-- API routes (`contact.ts`, `guestbook.ts`) — validation → 400, unexpected → 500 generic (ไม่หลุดรายละเอียดภายใน)
+- **PR #13 MERGED → `main` (2026-09-25 15:38)** · test:labs ยืนยัน green บน main หลัง merge
+- **L5 ปิด**: XSS fix (commit `fc371ba` ผ่าน `claude -p`) — payload จริง render เป็นข้อความดิบ
 - **Lab 05b swarm** (~12/20 turns, จบก่อนเพดาน): ส่งฟอร์ม guestbook + contact บน localhost:4321 ผ่านจริง (Playwright) · สรุปใน [`SWARM.md`](./SWARM.md)
 
 ## In progress
