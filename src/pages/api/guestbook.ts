@@ -12,8 +12,10 @@ export const GET: APIRoute = async () => {
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'error';
-    const status = message.startsWith('NOT_IMPLEMENTED') ? 501 : 500;
-    return new Response(JSON.stringify({ error: message }), {
+    const status = message.startsWith('VALIDATION:') ? 400 : 500;
+    // Never leak internal error details (paths, SQL) to clients.
+    const safe = message.startsWith('VALIDATION:') ? message : 'internal error';
+    return new Response(JSON.stringify({ error: safe }), {
       status,
       headers: { 'content-type': 'application/json' },
     });
@@ -30,8 +32,10 @@ export const POST: APIRoute = async ({ request }) => {
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'error';
-    const status = message.startsWith('NOT_IMPLEMENTED') ? 501 : 400;
-    return new Response(JSON.stringify({ error: message }), {
+    const status = message.startsWith('VALIDATION:') ? 400 : 500;
+    // Never leak internal error details (paths, SQL) to clients.
+    const safe = message.startsWith('VALIDATION:') ? message : 'internal error';
+    return new Response(JSON.stringify({ error: safe }), {
       status,
       headers: { 'content-type': 'application/json' },
     });
