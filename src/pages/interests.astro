@@ -6,11 +6,10 @@ const profile = loadProfile();
 ---
 <BaseLayout title={`Interests · ${profile.name}`}>
   <section class="card">
-    <h1>Interests</h1>
+    <h1 lang="en">Interests</h1>
     <ul>
       {profile.interests.map((item) => <li>{item}</li>)}
     </ul>
     <p>อัปเดตรายการสิ่งที่สนใจเร็ว ๆ นี้</p>
   </section>
 </BaseLayout>
-

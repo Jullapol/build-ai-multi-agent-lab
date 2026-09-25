@@ -4,17 +4,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Contact">
   <section class="card">
-    <h1>Contact</h1>
+    <h1 lang="en">Contact</h1>
     <p>ฟอร์มนี้โพสต์ไปที่ <code>POST /api/contact</code></p>
     <form id="contact-form">
-      <label for="name">Name</label>
+      <label lang="en" for="name">Name</label>
       <input id="name" name="name" required maxlength="80" />
-      <label for="email">Email</label>
+      <label lang="en" for="email">Email</label>
       <input id="email" name="email" type="email" required maxlength="120" />
-      <label for="message">Message</label>
+      <label lang="en" for="message">Message</label>
       <textarea id="message" name="message" rows="5" required maxlength="2000"></textarea>
-      <p style="margin-top:1rem"><button type="submit">Send</button></p>
-      <p id="status" role="status" aria-live="polite"></p>
+      <p style="margin-top:1rem"><button lang="en" type="submit">Send</button></p>
+      <p id="status" lang="en" role="status" aria-live="polite"></p>
     </form>
   </section>
 </BaseLayout>
@@ -40,4 +40,3 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
   });
 </script>
-
