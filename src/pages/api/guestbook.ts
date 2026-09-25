@@ -43,6 +43,13 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
     const body = await request.json();
+    // Honeypot (D-05): non-empty hidden "website" -> silent 201, nothing stored.
+    if (typeof body?.website === 'string' && body.website.trim() !== '') {
+      return new Response(JSON.stringify({ ok: true }), {
+        status: 201,
+        headers: { 'content-type': 'application/json' },
+      });
+    }
     const row = insertGuestbook(body);
     return new Response(JSON.stringify(row), {
       status: 201,
