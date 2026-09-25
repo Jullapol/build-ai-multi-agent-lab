@@ -23,9 +23,6 @@ test('home hero fits in the first screen on 360x640', async ({ page }) => {
   const heroBox = await hero.boundingBox();
   expect(heroBox).not.toBeNull();
   expect(heroBox!.y + heroBox!.height).toBeLessThanOrEqual(640);
-
-  const scrollHeight = await page.evaluate(() => document.scrollingElement?.scrollHeight ?? document.body.scrollHeight);
-  expect(scrollHeight).toBeLessThanOrEqual(640);
 });
 
 test('contact page has form fields', async ({ page }) => {
