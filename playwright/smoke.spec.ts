@@ -9,6 +9,7 @@ test('home renders nav and heading', async ({ page }) => {
 test('home hero fits in the first screen on 360x640', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 640 });
   await page.goto('/');
+  await page.evaluate(() => window.scrollTo(0, 0));
 
   const hero = page.locator('main .hero');
   await expect(hero).toBeVisible();
@@ -20,13 +21,14 @@ test('home hero fits in the first screen on 360x640', async ({ page }) => {
   const heroBottom = await hero.evaluate((element) => {
     const rect = element.getBoundingClientRect();
     return {
+      scrollY: window.scrollY,
       heroTop: window.scrollY + rect.top,
       heroBottom: window.scrollY + rect.bottom,
-      firstScreenTop: 0,
       firstScreenBottom: window.innerHeight,
     };
   });
-  expect(heroBottom.heroTop).toBeGreaterThanOrEqual(heroBottom.firstScreenTop);
+  expect(heroBottom.scrollY).toBe(0);
+  expect(heroBottom.heroTop).toBeGreaterThanOrEqual(0);
   expect(heroBottom.heroBottom).toBeLessThanOrEqual(heroBottom.firstScreenBottom + 1);
 });
 
