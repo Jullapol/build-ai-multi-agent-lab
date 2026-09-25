@@ -3,12 +3,12 @@
 > คัดลอกเป็น `docs/STATUS.md` ใน Lab 00 · อ่านทุก session · **สั้น** · single-writer ต่อรอบ  
 > ดู [`COURSE.md`](../COURSE.md) ชั้น State (Hot)
 
-Last updated: 2026-09-25 17:10 +07:00  
-Updated by: OpenCode (merge Lab 04 → main)
+Last updated: 2026-09-25 17:35 +07:00  
+Updated by: OpenCode (merge + close PRs + deploy prep)
 
 ## Current goal
 
-- Ship prep — Lab 04 (PR #12) merge เข้า main แล้ว · ขั้นถัดไป: QA หลัง merge → deploy (Lab 08)
+- **Lab 04 MERGED → main (`f6ff522`)** · PR #12 + PR #6 ปิดแล้ว · ขั้นถัดไป: deploy (Lab 08)
 
 ## Done
 
@@ -22,7 +22,7 @@ Updated by: OpenCode (merge Lab 04 → main)
 
 ## In progress
 
-- Merge Lab 04 → main (resolve conflict 6 ไฟล์ · DECISIONS รวมสองชุด D1–D12 + D-01–D-05) · จากนั้น: npm test + build บน main → ปิด PR #12
+- Deploy prep (Lab 08): Dockerfile/Coolify ตาม AGENTS.md — รอ SITE_URL / webhook จาก JT
 
 ## Blocked
 
@@ -31,14 +31,13 @@ Updated by: OpenCode (merge Lab 04 → main)
 
 ## Next actions
 
-1. Commit merge → push `lab-04-frontend` → merge PR #12 (จะมี conflict แจ้งบน GitHub จนกว่า push นี้จะขึ้น)
-2. บน main: `npm test` + `npm run build` + smoke หน้าเว็บ → ยืนยันก่อน deploy
-3. Lab 06 a11y (ค้าง) · JT: L4 (ช่องทางติดต่อ) / L7 (headline+tagline) / L8 (override Must) ก่อน ship จริง
+1. ✅ Merge PR #12 (direct push `f6ff522`) · ปิด PR #12/#6 · ยืนยันบน build ใหม่: test 9/9 · labs 2/2 · e2e 10/10 · smoke HTTP ครบ
+2. JT: ตั้ง `SITE_URL` + Coolify webhook → deploy · ห้ามเคลม deploy สำเร็จจนกว่ามี URL 200 จริง
+3. หลัง deploy: ล้าง guestbook test entries (Q3/F3) · แก้ headline/tagline PROFILE (L7) · Lab 06 a11y ต่อ
 
 ## Files changed in latest session
 
-- Merge `main` → `lab-04-frontend`: resolve `docs/{DECISIONS,OPEN_LOOPS,STATUS}.md` · `opencode.json` · ลบ `src/pages/{contact,guestbook}.astro` คงตาม branch (D6/D7)
-- รีวิวอิสระ: `docs/review-opencode.md` (Lab 04) · `docs/review-opencode-lab05.md` (Lab 05)
+- Merge commit `f6ff522` (main): Lab 04 ทั้งหมด + resolve conflict 6 ไฟล์ · แก้ encoding DECISIONS/OPEN_LOOPS เป็น UTF-8 (เดิม UTF-16 จาก PS redirect ตอน resolve)
 
 ## Notes
 
