@@ -3,12 +3,12 @@
 > คัดลอกเป็น `docs/STATUS.md` ใน Lab 00 · อ่านทุก session · **สั้น** · single-writer ต่อรอบ  
 > ดู [`COURSE.md`](../COURSE.md) ชั้น State (Hot)
 
-Last updated: 2026-09-25 15:47 +07:00  
-Updated by: OpenCode
+Last updated: 2026-09-25 16:05 +07:00  
+Updated by: Claude Code
 
 ## Current goal
 
-- Lab 05 — **เสร็จสมบูรณ์**: guestbook/contact SQLite + XSS fix merged เข้า `main` (PR #13)
+- Lab 06 — QA: E2E Playwright เสร็จ ([`QA.md`](./QA.md#e2e-playwright)) · ถัดไป a11y
 
 ## Done
 
@@ -21,7 +21,7 @@ Updated by: OpenCode
 
 ## In progress
 
-- —
+- Lab 06 a11y — ยังไม่เริ่ม · findings F1–F4 ใน `QA.md` รอผู้ใช้สั่งแก้หลัง a11y
 
 ## Blocked
 

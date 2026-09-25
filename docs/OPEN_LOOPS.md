@@ -3,12 +3,15 @@
 > คัดลอกเป็น `docs/OPEN_LOOPS.md` ใน Lab 00 · งานค้างที่ยังไม่ปิด · ลบแถวเมื่อเสร็จ  
 > Owner = `Claude` | `OpenCode` | `human`
 
-Last updated: 2026-09-25 15:45 +07:00
+Last updated: 2026-09-25 16:05 +07:00
 
 | ID | Task | Owner | Priority | Trigger / due | Notes |
 |---|---|---|---|---|---|
 | L1 | สร้าง STATUS + OPEN_LOOPS จาก example | human | P0 | Lab 00 | เสร็จแล้ว — ลบเมื่อเก็บกวาด |
 | L4 | revoke/rotate GitHub PAT ที่หลุดเข้าแชท (`.env` ไม่เคยติด git ✓ — หลุดเฉพาะในแชท) | human | P0 | ทันที | ทำเองที่ github.com/settings/tokens — agent แตะ token ไม่ได้ |
+| Q1 | F1: PROFILE parser เก็บแค่บรรทัดแรก (Interests 1/3) — `src/lib/profile.ts:42` | Claude | P1 | หลัง a11y (รอสั่ง) | ดู `QA.md` F1 |
+| Q2 | F2: placeholder PROFILE มีข้อความคอร์สหลุดหน้าเว็บ — กรอก `docs/PROFILE.md` จริง | human | P1 | ก่อน ship | ดู `QA.md` F2 |
+| Q3 | F3: ล้าง guestbook test entries (รวม `Lab 05b`, E2E) ก่อน ship | OpenCode | P2 | ก่อน ship | ดู `QA.md` F3 |
 
 ## ปิดแล้ว (ย่อ — ย้ายหรือลบได้เมื่อรก)
 
