@@ -3,7 +3,7 @@
 > คัดลอกเป็น `docs/STATUS.md` ใน Lab 00 · อ่านทุก session · **สั้น** · single-writer ต่อรอบ  
 > ดู [`COURSE.md`](../COURSE.md) ชั้น State (Hot)
 
-Last updated: 2026-09-25 15:35 +07:00  
+Last updated: 2026-09-25 15:41 +07:00  
 Updated by: OpenCode
 
 ## Current goal
@@ -27,13 +27,14 @@ Updated by: OpenCode
 
 ## Next actions
 
-1. **Claude/`frontend` (L5)**: แก้ stored XSS ใน `guestbook.astro` (innerHTML → escape/textContent) + แสดง error เมื่อ POST พัง
-2. สร้าง PR ฝั่ง backend — owner OpenCode
-3. บันทึก `docs/DECISIONS.md` (L3) — validation rules: name ≤100 · email ≤254 · contact msg ≤2000 · guestbook msg ≤1000
+1. Merge PR [#13](https://github.com/Jullapol/build-ai-multi-agent-lab/pull/13) — หลัง review
+2. **Claude/`frontend` (L5)**: แก้ stored XSS ใน `guestbook.astro` (innerHTML → escape/textContent) + แสดง error เมื่อ POST พัง
+3. **human (L4, P0)**: revoke/rotate GitHub PAT ที่หลุดเข้าแชท
 
 ## Files changed in latest session
 
-- `docs/SWARM.md` (ใหม่) · `docs/STATUS.md` · `docs/OPEN_LOOPS.md` — เอกสาร swarm/loop เท่านั้น (**ไม่มีการแก้โค้ดรอบนี้**)
+- Commit `c380385` (ผ่าน headless `opencode run`): src/lib/db.ts + 2 API routes + docs (7 ไฟล์) → PR #13
+- `docs/DECISIONS.md` ใหม่ (D-01, D-02) · งานนี้: STATUS/OPEN_LOOPS ปิด L2, L3
 
 ## Notes
 
