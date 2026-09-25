@@ -11,11 +11,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <input id="name" name="name" required maxlength="80" />
       <label for="message">Message</label>
       <textarea id="message" name="message" rows="3" required maxlength="500"></textarea>
+      <!-- Honeypot (D-05): คนไม่เห็น · bot กรอก → API ตอบ 201 ปลอม ไม่บันทึก -->
+      <label class="hp-field" for="website">Website</label>
+      <input class="hp-field" id="website" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <p style="margin-top:1rem"><button type="submit">Sign</button></p>
     </form>
     <div id="entries" class="card" style="margin-top:1.25rem" aria-live="polite">Loading…</div>
   </section>
 </BaseLayout>
+<style is:global>
+  /* ซ่อนนอกจอ ไม่ใช้ display:none — บาง bot/autofill ข้าม field ที่ display:none */
+  .hp-field { position: absolute; left: -9999px; }
+</style>
 <script>
   const entries = document.getElementById('entries');
   const form = document.getElementById('gb-form');
