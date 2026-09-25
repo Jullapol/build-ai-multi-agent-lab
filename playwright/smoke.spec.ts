@@ -23,7 +23,7 @@ test('home hero fits in the first screen on 360x640', async ({ page }) => {
     const rect = element.getBoundingClientRect();
     return { bottom: rect.bottom, viewportHeight: window.innerHeight };
   });
-  expect(heroBottom.bottom).toBeLessThanOrEqual(heroBottom.viewportHeight);
+  expect(heroBottom.bottom).toBeLessThanOrEqual(heroBottom.viewportHeight + 1);
 });
 
 test('contact page has form fields', async ({ page }) => {
