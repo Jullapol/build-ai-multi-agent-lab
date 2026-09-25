@@ -27,14 +27,13 @@ Updated by: OpenCode
 
 ## Next actions
 
-1. Merge PR [#13](https://github.com/Jullapol/build-ai-multi-agent-lab/pull/13) — หลัง review
-2. **Claude/`frontend` (L5)**: แก้ stored XSS ใน `guestbook.astro` (innerHTML → escape/textContent) + แสดง error เมื่อ POST พัง
-3. **human (L4, P0)**: revoke/rotate GitHub PAT ที่หลุดเข้าแชท
+1. Merge PR [#13](https://github.com/Jullapol/build-ai-multi-agent-lab/pull/13) — ตอนนี้มี 3 commits (backend + docs + XSS fix)
+2. **human (L4, P0)**: revoke/rotate GitHub PAT ที่หลุดเข้าแชท — ที่ github.com/settings/tokens
 
 ## Files changed in latest session
 
-- Commit `c380385` (ผ่าน headless `opencode run`): src/lib/db.ts + 2 API routes + docs (7 ไฟล์) → PR #13
-- `docs/DECISIONS.md` ใหม่ (D-01, D-02) · งานนี้: STATUS/OPEN_LOOPS ปิด L2, L3
+- Commit `fc371ba` (ผ่าน `claude -p`): `src/pages/guestbook.astro` escapeHtml + POST error UX · รายงาน `docs/review-fe-xss-fix.md`
+- ยืนยัน: test:labs 2/2 + npm test 3/3 · payload XSS แสดงเป็นข้อความดิบบน localhost (imgCount=0)
 
 ## Notes
 
