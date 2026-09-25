@@ -7,4 +7,7 @@ export default defineConfig({
   output: 'server',
   adapter: node({ mode: 'standalone' }),
   server: { host: true, port: 4321 },
+  // D-04: ห้าม inline page scripts — CSP `script-src 'self'` จะ block inline script
+  // (บังคับออกเป็นไฟล์ external แทนการคลาย CSP ด้วย 'unsafe-inline')
+  vite: { build: { assetsInlineLimit: 0 } },
 });

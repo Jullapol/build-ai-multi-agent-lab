@@ -116,7 +116,9 @@ function requireText(
   if (typeof value !== 'string') {
     throw new Error(`VALIDATION: ${field} must be a string`);
   }
-  const trimmed = value.trim();
+  // Defense-in-depth (D-04): strip control chars (keep \n and \t) before storing.
+  const cleaned = value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '');
+  const trimmed = cleaned.trim();
   if (trimmed.length < min || trimmed.length > max) {
     throw new Error(`VALIDATION: ${field} must be ${min}-${max} characters`);
   }
@@ -126,6 +128,10 @@ function requireText(
 function requireEmail(value: unknown): string {
   if (typeof value !== 'string') {
     throw new Error('VALIDATION: email must be a string');
+  }
+  // Reject (not strip) control characters in email — strong signal of garbage input.
+  if (/[\u0000-\u001F\u007F]/.test(value)) {
+    throw new Error('VALIDATION: email format is invalid');
   }
   const email = value.trim();
   if (email.length === 0 || email.length > 254) {

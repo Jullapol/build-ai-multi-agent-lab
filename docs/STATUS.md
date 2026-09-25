@@ -16,6 +16,7 @@ Updated by: OpenCode
 - **PR #13 MERGED → `main` (2026-09-25 15:38)** · test:labs ยืนยัน green บน main หลัง merge
 - **L5 ปิด**: XSS fix (commit `fc371ba` ผ่าน `claude -p`) — payload จริง render เป็นข้อความดิบ
 - **Hardening D-03**: rate limit per-IP (contact 3/10min · guestbook 5/10min, 429 + Retry-After) — ยืนยัน live บน localhost: req 1-5 → 400, req 6 → 429 · test ใหม่ `tests/rate-limit.test.ts` 4/4 (รวมชุดเต็ม 7/7)
+- **Hardening D-04/D-05 (PR ที่สอง)**: CSP + security headers (`src/middleware.ts`) · server-side sanitize (strip control chars) · honeypot `website` ทั้ง server (ฉัน) + ฟอร์ม (Claude ผ่าน `claude -p`) · แก้ Astro inline-script ชน CSP ด้วย `assetsInlineLimit: 0` (prod: inline 0 · external 1 · console 0 error) · ยืนยัน live: headers ครบ 4 · honeypot → 201 ไม่เข้า DB · ฟอร์มส่งได้จริงบน prod · tests 9/9 + labs 2/2
 - **Lab 05b swarm** (~12/20 turns, จบก่อนเพดาน): ส่งฟอร์ม guestbook + contact บน localhost:4321 ผ่านจริง (Playwright) · สรุปใน [`SWARM.md`](./SWARM.md)
 
 ## In progress
