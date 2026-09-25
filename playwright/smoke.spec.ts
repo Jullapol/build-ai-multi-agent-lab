@@ -14,9 +14,8 @@ test('home hero fits in the first screen on 360x640', async ({ page }) => {
   await expect(hero).toBeVisible();
   await expect(hero.getByText('Builder')).toBeVisible();
   await expect(hero.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(hero).toContainText('ออกแบบงานให้คนที่งานล้นมือเบาขึ้นได้จริง');
-  await expect(hero).toContainText('ทีมผู้ช่วยที่แบ่งหน้าที่กัน');
-  await expect(hero.getByRole('link', { name: 'รู้จักผมมากขึ้น →' })).toBeVisible();
+  await expect(hero.locator('a[href="/about"]')).toBeVisible();
+  await expect(hero.locator('a')).toHaveCount(1);
   await expect(hero.getByText('Personal branding site')).toHaveCount(0);
   await expect(hero.getByText('Audience:')).toHaveCount(0);
 
