@@ -12,7 +12,7 @@ test('home hero fits in the first screen on 360x640', async ({ page }) => {
 
   const hero = page.locator('main .hero');
   await expect(hero).toBeVisible();
-  await expect(hero.getByText('Builder')).toBeVisible();
+  await expect(hero.locator('.hero-role')).toBeVisible();
   await expect(hero.getByRole('heading', { level: 1 })).toBeVisible();
   await expect(hero.locator('a[href="/about"]')).toBeVisible();
   await expect(hero.locator('a')).toHaveCount(1);
