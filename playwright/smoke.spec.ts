@@ -20,6 +20,9 @@ test('home hero fits in the first screen on 360x640', async ({ page }) => {
   await expect(hero.getByText('Personal branding site')).toHaveCount(0);
   await expect(hero.getByText('Audience:')).toHaveCount(0);
 
+  const scrollY = await page.evaluate(() => window.scrollY);
+  expect(scrollY).toBe(0);
+
   const heroBox = await hero.boundingBox();
   expect(heroBox).not.toBeNull();
   expect(heroBox!.y + heroBox!.height).toBeLessThanOrEqual(640);
