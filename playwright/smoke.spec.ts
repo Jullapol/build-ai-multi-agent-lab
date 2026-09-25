@@ -6,6 +6,28 @@ test('home renders nav and heading', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
+test('home hero fits in the first screen on 360x640', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 640 });
+  await page.goto('/');
+
+  const hero = page.locator('main .hero');
+  await expect(hero).toBeVisible();
+  await expect(hero.getByText('Builder')).toBeVisible();
+  await expect(hero.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(hero.getByText('ออกแบบงานให้คนที่งานล้นมือเบาขึ้นได้จริง')).toBeVisible();
+  await expect(hero.getByText('ทีมผู้ช่วยที่แบ่งหน้าที่กัน')).toBeVisible();
+  await expect(hero.getByRole('link', { name: 'รู้จักผมมากขึ้น →' })).toBeVisible();
+  await expect(hero.getByText('Personal branding site')).toHaveCount(0);
+  await expect(hero.getByText('Audience:')).toHaveCount(0);
+
+  const heroBox = await hero.boundingBox();
+  expect(heroBox).not.toBeNull();
+  expect(heroBox!.y + heroBox!.height).toBeLessThanOrEqual(640);
+
+  const scrollHeight = await page.evaluate(() => document.scrollingElement?.scrollHeight ?? document.body.scrollHeight);
+  expect(scrollHeight).toBeLessThanOrEqual(640);
+});
+
 test('contact page has form fields', async ({ page }) => {
   await page.goto('/contact');
   await expect(page.getByLabel('Name')).toBeVisible();

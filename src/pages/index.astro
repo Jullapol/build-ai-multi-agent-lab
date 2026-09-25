@@ -4,19 +4,65 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { loadProfile } from '../lib/profile';
 const profile = loadProfile();
 ---
-<BaseLayout title={`${profile.name} · Home`} description={profile.headline}>
-  <section class="card">
-    <p style="margin:0;color:var(--accent);font-weight:700">Personal branding site</p>
+<BaseLayout
+  title={`${profile.name} · Home`}
+  description="Builder focused on designing helper teams that reduce overload for busy professionals."
+>
+  <section class="card hero">
+    <p class="hero-role">Builder</p>
     <h1>{profile.name}</h1>
-    <p style="font-size:1.2rem;color:var(--text)">{profile.headline}</p>
-    <p>{profile.bio}</p>
-    <p><strong>Audience:</strong> {profile.audience}</p>
-  </section>
-  <section class="grid">
-    <a class="card" href="/about"><h2>About</h2><p>เรื่องราวและเส้นทาง</p></a>
-    <a class="card" href="/interests"><h2>Interests</h2><p>หัวข้อที่สนใจ</p></a>
-    <a class="card" href="/contact"><h2>Contact</h2><p>ส่งข้อความถึงฉัน</p></a>
-    <a class="card" href="/guestbook"><h2>Guestbook</h2><p>ฝากคำทักทาย</p></a>
+    <p class="hero-headline">ออกแบบงานให้คนที่งานล้นมือเบาขึ้นได้จริง</p>
+    <p class="hero-tagline">ผมสนใจสร้างทีมผู้ช่วยที่แบ่งหน้าที่กัน เพื่อช่วยคนทำงานจัดการงานซ้ำ งานจุกจิก และขั้นตอนที่หลุดง่าย</p>
+    <p class="hero-link"><a href="/about">รู้จักผมมากขึ้น →</a></p>
   </section>
 </BaseLayout>
 
+<style>
+  .hero {
+    margin: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .hero-role,
+  .hero-link {
+    margin: 0;
+  }
+
+  .hero-role {
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    margin: 0;
+  }
+
+  .hero-headline,
+  .hero-tagline {
+    margin: 0;
+  }
+
+  .hero-headline {
+    color: var(--text);
+    font-size: clamp(1.15rem, 3vw, 1.35rem);
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .hero-tagline {
+    line-height: 1.55;
+  }
+
+  .hero-link a {
+    font-weight: 700;
+  }
+
+  @media (max-width: 480px) {
+    .hero {
+      gap: 0.75rem;
+    }
+  }
+</style>

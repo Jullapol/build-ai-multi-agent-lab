@@ -3,7 +3,7 @@ interface Props {
   title?: string;
   description?: string;
 }
-const { title = 'Personal Site', description = 'Personal branding site for the multi-agent course' } = Astro.props;
+const { title = 'Personal Site', description = 'Personal site for sharing work, interests, and contact details.' } = Astro.props;
 ---
 <!doctype html>
 <html lang="th">
@@ -56,6 +56,21 @@ const { title = 'Personal Site', description = 'Personal branding site for the m
       button { background: var(--accent); color: #081018; font-weight: 700; cursor: pointer; width: auto; }
       label { display: block; margin: 0.75rem 0 0.35rem; color: var(--text); font-weight: 600; }
       .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+      @media (max-width: 480px) {
+        nav {
+          gap: 0.75rem;
+          padding: 0.9rem 0;
+        }
+
+        main {
+          padding: 1rem 0 2rem;
+        }
+
+        .card {
+          padding: 1rem 1.1rem;
+        }
+      }
     </style>
   </head>
   <body>
