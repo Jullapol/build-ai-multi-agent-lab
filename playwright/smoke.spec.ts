@@ -22,12 +22,12 @@ test('home hero fits in the first screen on 360x640', async ({ page }) => {
     return {
       heroTop: window.scrollY + rect.top,
       heroBottom: window.scrollY + rect.bottom,
-      viewportTop: window.scrollY,
-      viewportBottom: window.scrollY + window.innerHeight,
+      firstScreenTop: 0,
+      firstScreenBottom: window.innerHeight,
     };
   });
-  expect(heroBottom.heroTop).toBeGreaterThanOrEqual(heroBottom.viewportTop);
-  expect(heroBottom.heroBottom).toBeLessThanOrEqual(heroBottom.viewportBottom + 1);
+  expect(heroBottom.heroTop).toBeGreaterThanOrEqual(heroBottom.firstScreenTop);
+  expect(heroBottom.heroBottom).toBeLessThanOrEqual(heroBottom.firstScreenBottom + 1);
 });
 
 test('contact page has form fields', async ({ page }) => {
