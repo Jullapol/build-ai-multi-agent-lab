@@ -19,6 +19,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <script>
   const entries = document.getElementById('entries');
   const form = document.getElementById('gb-form');
+  // ค่าจาก DB เป็น input ผู้ใช้ — ต้อง escape ก่อนใส่ innerHTML (กัน stored XSS)
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
   async function load() {
     const res = await fetch('/api/guestbook');
     const data = await res.json();
@@ -27,17 +36,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       return;
     }
     entries.innerHTML = (data.entries || [])
-      .map((e) => `<p><strong>${e.name}</strong>: ${e.message}<br/><small>${e.created_at}</small></p>`)
+      .map((e) => `<p><strong>${escapeHtml(e.name)}</strong>: ${escapeHtml(e.message)}<br/><small>${escapeHtml(e.created_at)}</small></p>`)
       .join('') || '<p>No entries yet.</p>';
   }
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const payload = Object.fromEntries(new FormData(form).entries());
-    await fetch('/api/guestbook', {
+    const res = await fetch('/api/guestbook', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload),
     });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      // textContent = ไม่ตีความเป็น HTML · ไม่ reset เพื่อให้ผู้ใช้แก้แล้วส่งใหม่ได้
+      entries.textContent = `ส่งไม่สำเร็จ: ${data.error || `HTTP ${res.status}`}`;
+      return;
+    }
     form.reset();
     await load();
   });
