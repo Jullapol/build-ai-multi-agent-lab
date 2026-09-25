@@ -31,8 +31,17 @@ test.describe('mobile home hero', () => {
         firstScreenTop: 0,
       };
     });
+    const ctaBottom = await cta.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return {
+        ctaViewportTop: rect.top,
+        ctaBottom: rect.bottom,
+      };
+    });
     expect(heroBottom.heroViewportTop).toBeGreaterThanOrEqual(heroBottom.firstScreenTop);
     expect(heroBottom.heroBottom).toBeLessThanOrEqual(mobileViewport.height + 1);
+    expect(ctaBottom.ctaViewportTop).toBeGreaterThanOrEqual(0);
+    expect(ctaBottom.ctaBottom).toBeLessThanOrEqual(mobileViewport.height + 1);
   });
 });
 
