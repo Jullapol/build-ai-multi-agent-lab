@@ -21,7 +21,7 @@ test('home hero fits in the first screen on 360x640', async ({ page }) => {
 
   const heroBottom = await hero.evaluate((element) => {
     const rect = element.getBoundingClientRect();
-    return { bottom: rect.bottom, viewportHeight: window.innerHeight };
+    return { bottom: window.scrollY + rect.bottom, viewportHeight: window.innerHeight };
   });
   expect(heroBottom.bottom).toBeLessThanOrEqual(heroBottom.viewportHeight + 1);
 });
