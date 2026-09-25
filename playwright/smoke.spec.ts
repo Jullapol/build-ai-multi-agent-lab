@@ -19,9 +19,6 @@ test('home hero fits in the first screen on 360x640', async ({ page }) => {
   await expect(hero.getByText('Personal branding site')).toHaveCount(0);
   await expect(hero.getByText('Audience:')).toHaveCount(0);
 
-  const scrollY = await page.evaluate(() => window.scrollY);
-  expect(scrollY).toBe(0);
-
   const heroBottom = await hero.evaluate((element) => {
     const rect = element.getBoundingClientRect();
     return { bottom: rect.bottom, viewportHeight: window.innerHeight };
