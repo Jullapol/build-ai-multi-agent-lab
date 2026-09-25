@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { insertGuestbook, listGuestbook } from '../../lib/db';
+import { checkRateLimit, clientIp, RATE_LIMITS } from '../../lib/rate-limit';
 
 export const prerender = false;
 
@@ -12,8 +13,10 @@ export const GET: APIRoute = async () => {
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'error';
-    const status = message.startsWith('NOT_IMPLEMENTED') ? 501 : 500;
-    return new Response(JSON.stringify({ error: message }), {
+    const status = message.startsWith('VALIDATION:') ? 400 : 500;
+    // Never leak internal error details (paths, SQL) to clients.
+    const safe = message.startsWith('VALIDATION:') ? message : 'internal error';
+    return new Response(JSON.stringify({ error: safe }), {
       status,
       headers: { 'content-type': 'application/json' },
     });
@@ -22,7 +25,31 @@ export const GET: APIRoute = async () => {
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const rl = checkRateLimit(
+      `guestbook:${clientIp(request.headers)}`,
+      RATE_LIMITS.guestbook.limit,
+      RATE_LIMITS.guestbook.windowMs
+    );
+    if (!rl.ok) {
+      return new Response(
+        JSON.stringify({ error: 'RATE_LIMIT: too many requests, try again later' }),
+        {
+          status: 429,
+          headers: {
+            'content-type': 'application/json',
+            'retry-after': String(rl.retryAfterSec),
+          },
+        }
+      );
+    }
     const body = await request.json();
+    // Honeypot (D-05): non-empty hidden "website" -> silent 201, nothing stored.
+    if (typeof body?.website === 'string' && body.website.trim() !== '') {
+      return new Response(JSON.stringify({ ok: true }), {
+        status: 201,
+        headers: { 'content-type': 'application/json' },
+      });
+    }
     const row = insertGuestbook(body);
     return new Response(JSON.stringify(row), {
       status: 201,
@@ -30,8 +57,10 @@ export const POST: APIRoute = async ({ request }) => {
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'error';
-    const status = message.startsWith('NOT_IMPLEMENTED') ? 501 : 400;
-    return new Response(JSON.stringify({ error: message }), {
+    const status = message.startsWith('VALIDATION:') ? 400 : 500;
+    // Never leak internal error details (paths, SQL) to clients.
+    const safe = message.startsWith('VALIDATION:') ? message : 'internal error';
+    return new Response(JSON.stringify({ error: safe }), {
       status,
       headers: { 'content-type': 'application/json' },
     });
